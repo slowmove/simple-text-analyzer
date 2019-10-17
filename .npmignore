@@ -1,3 +1,4 @@
 tests
 .babelrc
 .eslintrc.yml
+jest.config.js

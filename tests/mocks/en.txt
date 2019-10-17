@@ -1,0 +1,66 @@
+Why?
+To write tests for your code, as well as following a code design pattern, is crucial parts of building a scalable and stable code base and deliver on the continuous integration, deployment and delivery promises that we all wants to reach.
+
+The safest way to implement this should be before each commit or push, to avoid broken code to be integrated into the origin code base.
+
+This is a process which may, at a first look, be quite struggling looking at the git hooks documentation
+
+How?
+Fortunately, with the great community around JavaScript and NPM, there are some packages that will greatly simplify the workflow for you to integrate this into your project.
+
+Except from the testing and linting, which in this example is being made with Jest and ESLint, we will go through Husky for git hooks and lint-staged for partial affect.
+
+Hook up Git events
+As mentioned we're using Husky to simplify the git hooks implementation. First install it by running npm install --save-dev husky.
+
+In your package.json set up the event on which you want to act - in our case the pre-commit event - by adding
+  "husky": {
+    "hooks": {
+      "pre-commit": ""
+    }
+  }
+Now let's find out what to do with this hook.
+
+We probably want to run our tests and linting to be sure that we don't commit any broken code into the repository.
+
+Accordning to our weapons of choice we'll run jest && eslint.
+  "husky": {
+    "hooks": {
+      "pre-commit": "jest && eslint"
+    }
+  }
+The problem now is that each time we do any minor change, the pre-commit hook will run our entire test suite and validate the code standards through our entire code base. Not that effective as it in a big project may take up to a minute, if not more.
+
+Partial affect
+Lucky us - both Jest and ESLint, with a little help from lint-staged, has functionality to only run the code in context of our commit.
+
+First, install lint-staged by running npm install --save-dev lint-staged.
+
+Then, in the package.json file once again, we should define what actions that should be triggered towards which parts of the code base.
+  "lint-staged": {
+    "src/**/*.js": "eslint && jest"
+  }
+To run this instead of ESLint and Jest directly on the hook, let's change our git hook
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  }
+Lint-staged will by itself send the staged files into ESLint, though for Jest it isn't the files themselves that should be sent into it and therefore no viable action is taken and it still test the entire suite.
+
+Well, Jest have a few options parameters that may be suitable for our situation and in this scenario we will use --findRelatedTests which takes a list of files as argument, which is exactly what lint-staged is giving it.
+
+So calling Jest --findRelatedTests will run the specific tests related to the files which we are committing in that actual commit.
+
+This gives us the end result looking like this in our package.json
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "src/**/*.js": "eslint && jest --findRelatedTests"
+  }
+And it will lint only the files being committed, as well as running the tests related to those files. This will be just a minor suite being run each time we commit and is therefore not such burden as a big heavy suite might be, affecting your productivity.
+
+Happy days!
