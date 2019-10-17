@@ -33,6 +33,7 @@ const url = options.url;
 const ignoreFilePath = options.ignore;
 
 (async function() {
+  if (!filePath && !url) return;
   const file = filePath
     ? fs.readFileSync(filePath, "utf-8")
     : await http.get(url);

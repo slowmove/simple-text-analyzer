@@ -2,12 +2,12 @@
   "name": "simple-text-analyzer",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "main": "main.js",
   "bin": {
-    "simple-text-analyzer": "index.js"
+    "simple-text-analyzer": "cli.js"
   },
   "keywords": [],
   "author": "",
