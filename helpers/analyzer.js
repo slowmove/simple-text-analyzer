@@ -5,7 +5,7 @@ const splitByWords = text => {
 
 const createWordMap = (wordsArray, ignoreList) => {
   const wordsMap = {};
-  wordsArray.forEach(function(key) {
+  wordsArray.forEach(key => {
     key = key
       .trim()
       .toLowerCase()
@@ -26,17 +26,13 @@ const createWordMap = (wordsArray, ignoreList) => {
 
 const sortByCount = wordsMap => {
   var finalWordsArray = [];
-  finalWordsArray = Object.keys(wordsMap).map(function (key) {
+  finalWordsArray = Object.keys(wordsMap).map(key => {
     return {
       name: key,
       total: wordsMap[key]
     };
   });
-
-  finalWordsArray.sort(function (a, b) {
-    return b.total - a.total;
-  });
-
+  finalWordsArray.sort((a, b) => b.total - a.total);
   return finalWordsArray.filter(wordObject => wordObject.total > 2);
 };
 
