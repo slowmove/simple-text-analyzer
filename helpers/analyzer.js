@@ -1,7 +1,4 @@
-const splitByWords = text => {
-  var wordsArray = text.split(/\s+/);
-  return wordsArray;
-};
+const splitByWords = text => text.split(/\s+/);
 
 const createWordMap = (wordsArray, ignoreList) => {
   const wordsMap = {};
