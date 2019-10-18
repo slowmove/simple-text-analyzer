@@ -36,10 +36,13 @@ const ignoreFilePath = options.ignore;
 (async function() {
   if (!filePath && !url) return;
   const isPDF = filePath && filePath.includes(".pdf");
+  const isDocx = filePath && filePath.includes(".doc");
   let fileContent;
 
   if (isPDF) {
     fileContent = await contentParser.parsePdf(filePath);
+  } else if (isDocx) {
+    fileContent = await contentParser.parseDocx(filePath);
   } else {
     fileContent = filePath
       ? fs.readFileSync(filePath, "utf-8")

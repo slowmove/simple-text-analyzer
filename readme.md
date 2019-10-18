@@ -5,8 +5,9 @@ This small package helps you analyze a text, bringing the most valuable words up
 Available as both cli application as well as code library.
 
 **File support:**
-- plain text (txt, vtt, srt, md etc)
+- plain text (txt, rtf, md etc)
 - pdf
+- docx
 
 ### Install
 
