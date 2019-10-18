@@ -29,6 +29,7 @@
   },
   "dependencies": {
     "node-fetch": "^2.6.0",
+    "pdfreader": "^1.0.6",
     "yargs": "^14.2.0"
   }
 }

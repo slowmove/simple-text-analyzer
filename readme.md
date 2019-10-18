@@ -4,6 +4,10 @@ Simple Text Analyzer
 This small package helps you analyze a text, bringing the most valuable words up front to use as for example tags when publishing.
 Available as both cli application as well as code library.
 
+**File support:**
+- plain text (txt, vtt, srt, md etc)
+- pdf
+
 ### Install
 
 Install the cli app by running `npm -g install simple-text-analyzer`.

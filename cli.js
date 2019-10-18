@@ -4,6 +4,7 @@ const yargs = require("yargs");
 
 const http = require("./helpers/http");
 const analyzer = require("./helpers/analyzer");
+const contentParser = require("./helpers/contentParser");
 
 const options = yargs
   .usage("Usage with local file: -f <file>")
@@ -34,16 +35,23 @@ const ignoreFilePath = options.ignore;
 
 (async function() {
   if (!filePath && !url) return;
-  const file = filePath
-    ? fs.readFileSync(filePath, "utf-8")
-    : await http.get(url);
+  const isPDF = filePath && filePath.includes(".pdf");
+  let fileContent;
+
+  if (isPDF) {
+    fileContent = await contentParser.parsePdf(filePath);
+  } else {
+    fileContent = filePath
+      ? fs.readFileSync(filePath, "utf-8")
+      : await http.get(url);
+  }
 
   let wordsToIgnore = [];
   if (ignoreFilePath) {
     wordsToIgnore = fs.readFileSync(ignoreFilePath, "utf-8");
   }
 
-  const wordsArray = analyzer.splitByWords(file);
+  const wordsArray = analyzer.splitByWords(fileContent);
   const wordsMap = analyzer.createWordMap(wordsArray, wordsToIgnore);
   const finalList = analyzer.sortByCount(wordsMap);
 
