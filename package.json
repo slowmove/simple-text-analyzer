@@ -5,7 +5,7 @@
   "scripts": {
     "test": "jest",
     "test-watch": "jest --watch",
-    "coverage": "jest --coverage"
+    "coverage": "jest --coverage && open ./coverage/lcov-report/index.html"
   },
   "main": "main.js",
   "bin": {
